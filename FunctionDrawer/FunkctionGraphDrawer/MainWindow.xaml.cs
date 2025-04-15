@@ -32,20 +32,31 @@ namespace FunkctionGraphDrawer
         }
 
         private double EvaluateFunction(string function, double x, double y)
-        {
-            try
-            {
-                function = Regex.Replace(function, @"(\w+)\^(\w+)", "Pow($1, $2)");
-                NCalc.Expression expr = new NCalc.Expression(function);
-                expr.Parameters["x"] = x;
-                expr.Parameters["y"] = y;
-                return Convert.ToDouble(expr.Evaluate());
-            }
-            catch
-            {
-                throw new Exception("Invalid function format.");
-            }
-        }
+{
+    try
+    {
+        // Replace '^' with Pow
+        function = Regex.Replace(function, @"(\b[\w.]+)\s*\^\s*([\w.]+)", "Pow($1, $2)");
+
+        // Normalize trigonometric functions to NCalc format (capitalized)
+        function = Regex.Replace(function, @"\bsin\b", "Sin", RegexOptions.IgnoreCase);
+        function = Regex.Replace(function, @"\bcos\b", "Cos", RegexOptions.IgnoreCase);
+        function = Regex.Replace(function, @"\btan\b", "Tan", RegexOptions.IgnoreCase);
+        function = Regex.Replace(function, @"\bsqrt\b", "Sqrt", RegexOptions.IgnoreCase);
+        function = Regex.Replace(function, @"\bln\b", "Log", RegexOptions.IgnoreCase);
+        function = Regex.Replace(function, @"\blog\b", "Log10", RegexOptions.IgnoreCase);
+
+        NCalc.Expression expr = new NCalc.Expression(function);
+        expr.Parameters["x"] = x;
+        expr.Parameters["y"] = y;
+
+        return Convert.ToDouble(expr.Evaluate());
+    }
+    catch
+    {
+        throw new Exception("Invalid function format.");
+    }
+}
 
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
