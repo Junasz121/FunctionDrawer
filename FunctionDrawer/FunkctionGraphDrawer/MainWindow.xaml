@@ -1,0 +1,26 @@
+﻿<Window x:Class="FunkctionGraphDrawer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FunkctionGraphDrawer"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="Function Grapher" Height="600" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="0" Margin="0,0,0,10">
+            <TextBox x:Name="FunctionInput" Width="300" Margin="5" Text="Enter function (e.g., x + 2)"
+                     GotFocus="FunctionInput_GotFocus" LostFocus="FunctionInput_LostFocus"/>
+            <TextBox x:Name="YInput" Width="300" Margin="5" Text="Enter Y (optional or fixed value)" />
+            <Button Content="Calculate and Plot" Width="300" Margin="5" Click="CalculateButton_Click"/>
+            <Label x:Name="ResultLabel" Content="Result: " Width="300" Margin="5"/>
+        </StackPanel>
+
+        <oxy:PlotView x:Name="PlotView" Grid.Row="1" />
+    </Grid>
+</Window>
+
